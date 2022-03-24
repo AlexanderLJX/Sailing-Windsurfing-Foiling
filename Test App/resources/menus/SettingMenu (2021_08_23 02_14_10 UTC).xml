@@ -1,0 +1,7 @@
+<menu id="SettingMenu" title="Settings">
+		<menu-item id="minSpeed" label="Minimum Speed"/>
+    	<menu-item id="mapSize" label="Map Size"/>
+    	<menu-item id="mapTrail" label="Colored Trail"/>
+    	<menu-item id="alerts" label="Turn alerts on/off"/>
+    	<menu-item id="autoCalibrateWindDirection" label="Auto Calibrate on/off"/>
+</menu>

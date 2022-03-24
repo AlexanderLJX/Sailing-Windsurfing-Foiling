@@ -1,0 +1,5 @@
+<menu id="SetMapTrail" title="Select Trail">
+		<menu-item id="id1" label="Solid Color"/>
+		<menu-item id="id2" label="Speed Trail"/>
+    	<menu-item id="id3" label="VMG Trail"/>
+</menu>

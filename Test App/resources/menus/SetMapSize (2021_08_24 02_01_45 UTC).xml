@@ -1,0 +1,12 @@
+<menu id="SetMapSize" title="Select Zoom">
+		<menu-item id="id1" label="20m"/>
+		<menu-item id="id2" label="50m"/>
+    	<menu-item id="id3" label="100m"/>
+    	<menu-item id="id4" label="150m"/>
+    	<menu-item id="id5" label="200m"/>
+    	<menu-item id="id10" label="300m"/>
+		<menu-item id="id20" label="500m"/>
+		<menu-item id="id30" label="1000m"/>
+		<menu-item id="id40" label="2000m"/>
+		<menu-item id="id50" label="5000m"/>
+</menu>
