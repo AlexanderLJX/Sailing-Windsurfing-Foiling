@@ -1,0 +1,7 @@
+<menu id="SetShowHide" title="Show/Hide">
+		<menu-item id="id1" label="Left Side"/>
+		<menu-item id="id2" label="Min Speed"/>
+    	<menu-item id="id3" label="Under/Overlay"/>
+    	<menu-item id="id4" label="Heading"/>
+    	<menu-item id="id5" label="Right Side"/>
+</menu>

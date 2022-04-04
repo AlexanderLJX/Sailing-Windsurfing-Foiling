@@ -1,0 +1,18 @@
+<properties>
+    <property id="appVersion" type="string">0</property>
+    <property id="WidthMeterNumber" type="number">200</property>
+    <property id="MinSpeedValue" type="float">3.5</property>
+    <property id="MapTrail" type="number">0</property>
+    <property id="MarkOneLat" type="float">0</property>
+    <property id="MarkOneLong" type="float">0</property>
+    <property id="Alerts" type= "boolean">true</property>
+    <property id="AutoCalibrateWindDirection" type= "boolean">false</property>
+    <property id="ShowLeftSide" type= "boolean">true</property>
+    <property id="ShowMinSpeed" type= "boolean">true</property>
+    <property id="ShowUnderOverlay" type= "boolean">true</property>
+    <property id="ShowHeading" type= "boolean">true</property>
+    <property id="ShowRightSide" type= "boolean">true</property>
+    <property id="ShowRightSideInfo0" type= "number">0</property>
+    <property id="ShowRightSideInfo1" type= "number">1</property>
+    <property id="ShowRightSideInfo2" type= "number">2</property>
+</properties>

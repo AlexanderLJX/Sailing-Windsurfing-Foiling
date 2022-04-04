@@ -63,6 +63,10 @@ class SailingView extends WatchUi.View{
 	const sailBoat = [[0,-12],[10,12],[0,0],[-10,12]];
 	var laylineOne = new [2];
 	var laylineTwo = new [2];
+	var blinkingRec = false;
+	
+	
+	
 	function initialize (){
 		var width = System.getDeviceSettings().screenWidth;
 		var height = System.getDeviceSettings().screenHeight;
@@ -95,7 +99,7 @@ class SailingView extends WatchUi.View{
 		recPos = [(width/2)+(width/20),(height/50)];
 		vmgPosOne = [(width/2),(height/2)+(height/20)];
 		vmgPosTwo = [(width/2),(height/2)+(height/8)];
-		mapLengthPos = [(width/2),(height)-(height/10)];
+		mapLengthPos = [(width/2),(height*0.88)];
 		
 	}
 	// Calculate the position of information text on the screen
@@ -282,32 +286,45 @@ class SailingView extends WatchUi.View{
 		var time = System.getClockTime();
 		var timeString = Lang.format("$1$:$2$:$3$", [time.hour.format("%02d"), time.min.format("%02d"), time.sec.format("%02d")]);
 		
+		// Draw map size indicator
+		dc.drawText(mapLengthPos[0],mapLengthPos[1], Graphics.FONT_SYSTEM_TINY, Settings.WidthMeter,Graphics.TEXT_JUSTIFY_CENTER);
 		
-    	dc.drawText(mapLengthPos[0],mapLengthPos[1], Graphics.FONT_SYSTEM_TINY, Settings.WidthMeter,Graphics.TEXT_JUSTIFY_CENTER);
-		drawInformation (dc,0,Settings.autoCalibrateWindDirection ? "Wind/ATW(auto)" : "Wind/ATW",windDirection+"/ "+angleToWind,false);
-		drawInformation (dc,2,"Count/Sec",maneuverCount+" / "+maneuverSeconds,false);
-		drawInformation (dc,4,"Time",timeString,false);
-		drawInformation (dc,6,"mVmg/mSpd",maxVMG+"/"+maxSpeed,false);
-		drawInformation (dc,8,"vmg/ATW",recentVMG+"/"+angleOfBestVMG,false);
-		drawInformation (dc,10,"60secSpd",recentSpeed,false);
+		if(Settings.showLeftSide){
+	    	
+			drawInformation (dc,0,Settings.autoCalibrateWindDirection ? "Wind/ATW(auto)" : "Wind/ATW",windDirection+"/ "+angleToWind,false);
+			drawInformation (dc,2,"Count/Sec",maneuverCount+" / "+maneuverSeconds,false);
+			drawInformation (dc,4,"Time",timeString,false);
+			drawInformation (dc,6,"mVmg/mSpd",maxVMG+"/"+maxSpeed,false);
+			drawInformation (dc,8,"vmg/ATW",recentVMG+"/"+angleOfBestVMG,false);
+			drawInformation (dc,10,"60secSpd",recentSpeed,false);
+		}
+		if(Settings.showRightSide){
+			var tempStrArray = ["ATW","Speed","VMG","mSPD"];
+			var tempArray = [currentAngleToWind,currentSpeed,vmg,maxSpeed];
+			drawInformation (dc,0,tempStrArray[Settings.rightSideInfo[0]],tempArray[Settings.rightSideInfo[0]],true);
+			drawInformation (dc,2,tempStrArray[Settings.rightSideInfo[1]],tempArray[Settings.rightSideInfo[1]],true);
+			drawInformation (dc,4,tempStrArray[Settings.rightSideInfo[2]],tempArray[Settings.rightSideInfo[2]],true);	
+		}
 		
-		drawInformation (dc,0,"nATW",currentAngleToWind,true);
-		drawInformation (dc,2,"Speed",currentSpeed,true);
-		drawInformation (dc,4,"Vmg",vmg,true);
 //		drawInformation (dc,8,"VMG",vmg,true);
 
 		// Draw layline flag
-		if(model.laylineFlag){
-			dc.drawText(halfDC, 40, Graphics.FONT_SYSTEM_XTINY, "Overlay", Graphics.TEXT_JUSTIFY_CENTER);
-		}else{
-			dc.drawText(halfDC, 40, Graphics.FONT_SYSTEM_XTINY, "Underlay", Graphics.TEXT_JUSTIFY_CENTER);
+		if(Settings.showUnderOverlay){
+			if(model.laylineFlag){
+				dc.drawText(halfDC, halfDC/3, Graphics.FONT_SYSTEM_XTINY, "Overlay", Graphics.TEXT_JUSTIFY_CENTER);
+			}else{
+				dc.drawText(halfDC, halfDC/3, Graphics.FONT_SYSTEM_XTINY, "Underlay", Graphics.TEXT_JUSTIFY_CENTER);
+			}
 		}
-		if(model.isFoiling){
-			dc.drawText(halfDC, 60, Graphics.FONT_SYSTEM_XTINY,"Foiling",Graphics.TEXT_JUSTIFY_CENTER);
-		}else{
-			dc.drawText(halfDC, 60, Graphics.FONT_SYSTEM_XTINY,"Start",Graphics.TEXT_JUSTIFY_CENTER);
-			dc.drawText(halfDC, 75, Graphics.FONT_SYSTEM_XTINY,"Pumping!",Graphics.TEXT_JUSTIFY_CENTER);
+		if(Settings.MinSpeedValue!=0&&Settings.showMinSpeed){
+			if(model.isFoiling){
+				dc.drawText(halfDC, halfDC/2, Graphics.FONT_SYSTEM_XTINY,"Foiling",Graphics.TEXT_JUSTIFY_CENTER);
+			}else{
+				dc.drawText(halfDC, halfDC/2, Graphics.FONT_SYSTEM_XTINY,"Start",Graphics.TEXT_JUSTIFY_CENTER);
+				dc.drawText(halfDC, halfDC/1.6, Graphics.FONT_SYSTEM_XTINY,"Pumping!",Graphics.TEXT_JUSTIFY_CENTER);
+			}
 		}
+		
 		// Draw starboardPortFlag
 		if(model.starboardPortFlag){
 //			System.println("Port");
@@ -322,17 +339,31 @@ class SailingView extends WatchUi.View{
 		}else{
 //			System.println("Downwind");
 		}
+		if(Settings.showHeading){
+			dc.drawText(vmgPosOne[0],vmgPosOne[1],Graphics.FONT_SYSTEM_TINY,currentHeading,Graphics.TEXT_JUSTIFY_CENTER);
+		}
 		
-		dc.drawText(vmgPosOne[0],vmgPosOne[1],Graphics.FONT_SYSTEM_TINY,currentHeading,Graphics.TEXT_JUSTIFY_CENTER);
 //		dc.drawText(vmgPosTwo[0],vmgPosTwo[1],Graphics.FONT_SYSTEM_XTINY,currentHeading,Graphics.TEXT_JUSTIFY_CENTER);
 		// draw GPS signal
 		dc.setColor(_gpsColorsArray[model._accuracy==null ? 0 : model._accuracy], Graphics.COLOR_TRANSPARENT);
         
         dc.drawText(gpsPos[0], gpsPos[1], Graphics.FONT_SYSTEM_XTINY, "GPS", Graphics.TEXT_JUSTIFY_RIGHT);
         // draw Rec
-        dc.setColor(_gpsColorsArray[model.running ? 0 : 3], Graphics.COLOR_TRANSPARENT);
         
-        dc.drawText(recPos[0], recPos[1], Graphics.FONT_SYSTEM_XTINY, "REC" , Graphics.TEXT_JUSTIFY_LEFT);
+        var recordPause = "";
+        if(model.running){
+        	dc.setColor(_gpsColorsArray[0], Graphics.COLOR_TRANSPARENT);
+        	recordPause = "REC";
+        	blinkingRec = !blinkingRec;
+        	if(blinkingRec){
+        		dc.drawText(recPos[0], recPos[1], Graphics.FONT_SYSTEM_XTINY, "REC" , Graphics.TEXT_JUSTIFY_LEFT);
+        	}
+        }else{
+        	dc.setColor(_gpsColorsArray[3], Graphics.COLOR_TRANSPARENT);
+        	recordPause = "";
+        	dc.drawText(recPos[0], recPos[1], Graphics.FONT_SYSTEM_XTINY, "REC" , Graphics.TEXT_JUSTIFY_LEFT);
+        }
+        
     }
     
     function drawInformation (dc,arrayPosition,stringOne,stringTwo,leftOrRight){

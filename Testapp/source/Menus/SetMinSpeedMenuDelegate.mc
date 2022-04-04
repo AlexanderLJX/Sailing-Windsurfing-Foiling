@@ -5,7 +5,7 @@ using Toybox.System as Sys;
 //
 class SetMinSpeedMenuDelegate extends Ui.MenuInputDelegate
 {
-
+	var knotstokm = 1.85;
 	function initialize() 
     {
         MenuInputDelegate.initialize();
@@ -15,7 +15,7 @@ class SetMinSpeedMenuDelegate extends Ui.MenuInputDelegate
     {
     	if (item == :id1)
     	{
-    		Settings.SetMinSpeedValue(0.5);
+    		Settings.SetMinSpeedValue(0);
     	}
     	else if (item == :id2)
     	{
@@ -64,7 +64,7 @@ class SetMinSpeedMenuDelegate extends Ui.MenuInputDelegate
         else if (item == :id24)
         {
             Settings.SetMinSpeedValue(12);
-        } 
+        }
         popView(WatchUi.SLIDE_IMMEDIATE);
     	popView(WatchUi.SLIDE_IMMEDIATE);
     }

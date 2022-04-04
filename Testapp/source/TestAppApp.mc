@@ -25,7 +25,6 @@ class TestAppApp extends Application.AppBase {
     
     function onExit(){
     	Position.enableLocationEvents(Position.LOCATION_DISABLE, method(:onPosition));
-    	Settings.SaveSettings();
     }
 
     // onStop() is called when your application is exiting

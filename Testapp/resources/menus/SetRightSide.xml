@@ -1,0 +1,5 @@
+<menu id="SetRightSide" title="Right Side">
+		<menu-item id="id2" label="First Info"/>
+    	<menu-item id="id3" label="Second Info"/>
+    	<menu-item id="id4" label="Third Info"/>
+</menu>

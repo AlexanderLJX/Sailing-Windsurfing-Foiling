@@ -294,7 +294,7 @@ class TestAppModel{
 	        		// Enter above the layline
 	        		if(bearingToMarkOneExpiry>4){
 	        			bearingToMarkOneExpiry= 0;
-	        			if(Settings.alerts){
+	        			if(Settings.alerts&&Settings.showUnderOverlay){
 	        				if(Toybox.Attention has :playTone){
 	        					Attention.playTone(Attention.TONE_ALERT_HI);
 	        				}
@@ -357,7 +357,7 @@ class TestAppModel{
         	if(!isFoiling){
         		// Started foiling
         		isFoiling = true;
-        		if(Settings.alerts){
+        		if(Settings.alerts&&Settings.showMinSpeed){
         			Attention.vibrate(startFoilingVibeObj);
         		}
         	}
@@ -417,7 +417,7 @@ class TestAppModel{
         		upwindTicker = 0;
         		// Stopped foiling
         		isFoiling = false;
-        		if(Settings.alerts){
+        		if(Settings.alerts&&Settings.showMinSpeed){
         			Attention.vibrate(stopFoilingVibeObj);
         		}
         	}

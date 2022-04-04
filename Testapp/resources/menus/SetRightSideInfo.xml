@@ -1,0 +1,6 @@
+<menu id="SetRightSideInfo" title="Right Side Info">
+		<menu-item id="id1" label="ATW"/>
+    	<menu-item id="id2" label="Speed"/>
+    	<menu-item id="id3" label="VMG"/>
+    	<menu-item id="id4" label="Max Speed past 60 sec"/>
+</menu>

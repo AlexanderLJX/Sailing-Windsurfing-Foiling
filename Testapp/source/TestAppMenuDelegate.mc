@@ -15,7 +15,11 @@ class TestAppMenuDelegate extends WatchUi.MenuInputDelegate {
     }
 
     function onMenuItem(item) {
-        if (item == :item_1) {
+    	if (item == :startStop)
+        {
+            model.startStop();
+        }
+        else if (item == :item_1) {
             System.println("item 1");
             model.discard();
             if(WatchUi has :ProgressBar){
@@ -54,7 +58,7 @@ class TestAppMenuDelegate extends WatchUi.MenuInputDelegate {
             
         }else if (item == :item_5) {
             System.println("item 5");
-            WatchUi.pushView(new Rez.Menus.SettingMenu(), new SettingMenuDelegate(model), WatchUi.SLIDE_LEFT);
+            WatchUi.pushView(new Rez.Menus.SettingMenu(), new SettingMenuDelegate(), WatchUi.SLIDE_LEFT);
             
         }
     }

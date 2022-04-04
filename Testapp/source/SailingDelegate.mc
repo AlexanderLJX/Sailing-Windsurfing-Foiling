@@ -8,7 +8,6 @@ class SailingDelegate extends WatchUi.BehaviorDelegate {
 	}
 	
 	function onSelect(){
-		model.startStop();
 		return true;
 	}
 	

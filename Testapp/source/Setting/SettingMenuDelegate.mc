@@ -5,19 +5,23 @@ using Toybox.System as Sys;
 //
 class SettingMenuDelegate extends Ui.MenuInputDelegate 
 {
-    var model;
 	var sailingView;
     
-    function initialize(Model) 
+    function initialize() 
     {
         MenuInputDelegate.initialize();
-        model = Model;
         sailingView = Application.getApp().sailingView;
     }
 
     function onMenuItem(item) 
     {
-        if (item == :minSpeed)
+    	
+        if (item == :displaySettings)
+        {
+        	popView(WatchUi.SLIDE_IMMEDIATE);
+            Ui.pushView(new Rez.Menus.SetDisplaySettings(), new SetDisplaySettingsMenuDelegate(), Ui.SLIDE_LEFT);
+        }
+        else if (item == :minSpeed)
         {
             Ui.pushView(new Rez.Menus.SetMinSpeed(), new SetMinSpeedMenuDelegate(), Ui.SLIDE_LEFT);
         } 
@@ -31,20 +35,12 @@ class SettingMenuDelegate extends Ui.MenuInputDelegate
         }
         else if (item == :alerts)
         {
-        	if(Settings.alerts){
-        		Settings.alerts = false;
-        	}else{
-        		Settings.alerts = true;
-        	}
+        	Settings.SetAlerts();
             Ui.popView(Ui.SLIDE_IMMEDIATE);
         }
         else if (item == :autoCalibrateWindDirection)
         {
-        	if(Settings.autoCalibrateWindDirection){
-        		Settings.autoCalibrateWindDirection = false;
-        	}else{
-        		Settings.autoCalibrateWindDirection = true;
-        	}
+        	Settings.SetAutoCalibrateWindDirection();
             Ui.popView(Ui.SLIDE_IMMEDIATE);
         }
     }

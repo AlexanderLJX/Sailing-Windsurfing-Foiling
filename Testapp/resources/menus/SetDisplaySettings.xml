@@ -1,0 +1,4 @@
+<menu id="SetDisplaySettings" title="Display">
+		<menu-item id="id1" label="Show/hide"/>
+    	<menu-item id="id5" label="Set Right Side"/>
+</menu>
